@@ -1,0 +1,12 @@
+opencollection: 1.0.0
+info:
+  name: "PokeAPI"
+  type: workspace
+
+collections:
+  - name: "Pokemon"
+    path: "collections/Pokemon"
+
+specs:
+
+docs: ''
