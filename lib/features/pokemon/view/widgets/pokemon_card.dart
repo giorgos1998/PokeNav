@@ -22,6 +22,7 @@ class _PokemonCardState extends State<PokemonCard> {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: AnimatedSize(
         duration: Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
         child: Card(
           elevation: 2,
           color: Colors.transparent,

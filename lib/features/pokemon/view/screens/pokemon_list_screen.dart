@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokenav/features/pokemon/model/pokemon.dart';
 import 'package:pokenav/features/pokemon/view/widgets/pokemon_card.dart';
+import 'package:pokenav/features/pokemon/view/widgets/search_box.dart';
 import 'package:pokenav/features/pokemon/view/widgets/types_dropdown.dart';
 import 'package:pokenav/features/pokemon/view_model/pokemon_list_view_model.dart';
 
@@ -72,28 +73,9 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
             toolbarHeight: 60,
             backgroundColor: Colors.transparent,
             title: _isSearchOpen
-                ? SizedBox(
-                    height: 45,
-                    child: TextField(
-                      controller: _searchController,
-                      textAlignVertical: TextAlignVertical.center,
-                      decoration: InputDecoration(
-                        hintText: 'Search pokemon...',
-                        filled: true,
-                        fillColor: Colors.grey.withAlpha(60),
-                        isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.search),
-                          padding: EdgeInsets.zero,
-                          onPressed: () =>
-                              _viewModel.searchPokemon(_searchController.text),
-                        ),
-                      ),
-                    ),
+                ? SearchBox(
+                    textController: _searchController,
+                    onSearchPressed: _viewModel.searchPokemon,
                   )
                 : Text('PokeNav', style: textTheme.headlineLarge),
             leading: Padding(
@@ -102,13 +84,23 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
             ),
             actions: [
               // if (_viewModel.searchEnabled)
-              IconButton(
-                icon: Icon(_isSearchOpen ? Icons.close : Icons.search),
-                onPressed: () {
-                  print('Pressed search');
-                  setState(() {
-                    _isSearchOpen = !_isSearchOpen;
-                  });
+              ListenableBuilder(
+                listenable: _viewModel,
+                builder: (context, child) {
+                  return _viewModel.activeFilter != null
+                      ? IconButton(
+                          icon: Icon(
+                            _isSearchOpen ? Icons.close : Icons.search,
+                          ),
+                          onPressed: () {
+                            print('Pressed search');
+                            setState(() {
+                              _isSearchOpen = !_isSearchOpen;
+                              _searchController.clear();
+                            });
+                          },
+                        )
+                      : SizedBox.shrink();
                 },
               ),
               Padding(
