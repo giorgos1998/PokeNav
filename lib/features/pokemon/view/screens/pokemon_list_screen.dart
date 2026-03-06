@@ -96,7 +96,8 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
                             print('Pressed search');
                             setState(() {
                               _isSearchOpen = !_isSearchOpen;
-                              _searchController.clear();
+                              _searchController.text =
+                                  _viewModel.searchTerm ?? '';
                             });
                           },
                         )

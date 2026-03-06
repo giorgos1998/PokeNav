@@ -34,6 +34,7 @@ class PokemonListViewModel extends ChangeNotifier {
     print('Applying filter: ${type?.name}');
     activeFilter = type;
     searchEnabled = activeFilter != null ? true : false;
+    searchTerm = null;
     notifyListeners();
 
     noMoreResults = false;
