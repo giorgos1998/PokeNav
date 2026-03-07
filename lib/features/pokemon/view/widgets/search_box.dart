@@ -21,7 +21,7 @@ class SearchBox extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         style: textTheme.bodyMedium,
         decoration: InputDecoration(
-          hintText: 'Search pokemon...',
+          hintText: 'Search...',
           hintStyle: textTheme.bodyMedium!.copyWith(
             color: textTheme.bodyMedium!.color!.withAlpha(150),
           ),

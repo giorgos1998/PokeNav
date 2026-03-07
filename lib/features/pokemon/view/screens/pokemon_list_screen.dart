@@ -30,6 +30,7 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
     // Load next page when the scrolled list is almost at the end.
     if (currentScroll >= maxScroll - 200 &&
         !_viewModel.isLoadingNames &&
+        !_viewModel.isLoadingDetails &&
         !_viewModel.noMoreResults) {
       _viewModel.nextPage();
     }
@@ -51,7 +52,7 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
         // App background.
         Positioned.fill(
           child: Image.asset(
-            'backgrounds/pokeball_background.png',
+            'assets/backgrounds/pokeball_background.png',
             fit: BoxFit.cover,
           ),
         ),
@@ -70,7 +71,7 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
                 : Text('PokeNav', style: textTheme.headlineLarge),
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.asset('icons/pokeball.png'),
+              child: Image.asset('assets/icons/pokeball.png'),
             ),
             actions: [
               ListenableBuilder(

@@ -22,9 +22,15 @@ class StatPill extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 4),
             child: switch (stat) {
-              StatTypes.hp => Image.asset('icons/heart.png', height: 25),
-              StatTypes.attack => Image.asset('icons/sword.png', height: 25),
-              StatTypes.defense => Image.asset('icons/shield.png', height: 25),
+              StatTypes.hp => Image.asset('assets/icons/heart.png', height: 25),
+              StatTypes.attack => Image.asset(
+                'assets/icons/sword.png',
+                height: 25,
+              ),
+              StatTypes.defense => Image.asset(
+                'assets/icons/shield.png',
+                height: 25,
+              ),
             },
           ),
 

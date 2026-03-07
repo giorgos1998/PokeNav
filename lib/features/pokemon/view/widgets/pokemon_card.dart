@@ -51,7 +51,7 @@ class _PokemonCardState extends State<PokemonCard> {
                     left: 0,
                     right: 0,
                     child: Image.asset(
-                      'backgrounds/card_grass.png',
+                      'assets/backgrounds/card_grass.png',
                       fit: BoxFit.cover,
                       height: 50,
                       color: Colors.white.withAlpha(120),
@@ -77,11 +77,12 @@ class _PokemonCardState extends State<PokemonCard> {
                                   (widget.pokemon.imageUrl == null ||
                                       widget.pokemon.imageUrl!.isEmpty)
                                   ? Image.asset(
-                                      'icons/pikachu_dark.png',
+                                      'assets/icons/pikachu_dark.png',
                                       width: 64,
                                     )
                                   : FadeInImage.assetNetwork(
-                                      placeholder: 'icons/pikachu_dark.png',
+                                      placeholder:
+                                          'assets/icons/pikachu_dark.png',
                                       image: widget.pokemon.imageUrl!,
                                       width: 64,
                                     ),
@@ -123,14 +124,14 @@ class _PokemonCardState extends State<PokemonCard> {
                                         if (widget.pokemon.types == null ||
                                             widget.pokemon.types!.isEmpty)
                                           Image.asset(
-                                            'types/unknown.png',
+                                            'assets/types/unknown.png',
                                             height: 24.0,
                                           )
                                         else
                                           for (var type
                                               in widget.pokemon.types!)
                                             Image.asset(
-                                              'types/${type.name}.png',
+                                              'assets/types/${type.name}.png',
                                               height: 24.0,
                                             ),
                                       ],

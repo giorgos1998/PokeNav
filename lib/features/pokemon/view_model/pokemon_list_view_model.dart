@@ -21,7 +21,6 @@ class PokemonListViewModel extends ChangeNotifier {
   }
 
   List<Pokemon> get pokemons {
-    print('Visible pokemons count: ${_visiblePokemons.length}');
     return _visiblePokemons;
   }
 
@@ -56,12 +55,14 @@ class PokemonListViewModel extends ChangeNotifier {
     notifyListeners();
 
     switch ((activeFilter, searchEnabled, searchTerm?.isEmpty)) {
+      // No filter.
       case (null, _, _):
         page = await _repository.getPokemonNames(
           amount: amount,
           existing: _visiblePokemons.length,
         );
         break;
+      // Active filter.
       case (_, false, _):
       case (_, true, null || true):
         page = await _repository.getPokemonNamesFromType(
@@ -70,6 +71,7 @@ class PokemonListViewModel extends ChangeNotifier {
           existing: _visiblePokemons.length,
         );
         break;
+      // Active filter + search term.
       case (_, true, false):
         page = await _repository.getPokemonNamesFromSearch(
           searchTerm: searchTerm!,

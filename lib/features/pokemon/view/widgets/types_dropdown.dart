@@ -17,14 +17,17 @@ class PokemonTypesDropdown extends StatelessWidget {
           items: [
             DropdownMenuItem<PokemonType>(
               value: null,
-              child: Image.asset('types/all.png', height: 32),
+              child: Image.asset('assets/types/all.png', height: 32),
             ),
             ...PokemonType.values
                 .where((type) => type != PokemonType.unknown)
                 .map(
                   (type) => DropdownMenuItem<PokemonType>(
                     value: type,
-                    child: Image.asset('types/${type.name}.png', height: 32),
+                    child: Image.asset(
+                      'assets/types/${type.name}.png',
+                      height: 32,
+                    ),
                   ),
                 ),
           ],
