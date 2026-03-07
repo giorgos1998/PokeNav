@@ -2,6 +2,7 @@ import 'package:pokenav/features/pokemon/data/constants.dart';
 
 class Pokemon {
   final String name;
+  String? displayName;
   final List<PokemonType>? types;
   final int? hp;
   final int? attack;
@@ -10,6 +11,7 @@ class Pokemon {
 
   Pokemon({
     required this.name,
+    this.displayName,
     this.types,
     this.hp,
     this.attack,
@@ -19,6 +21,11 @@ class Pokemon {
 
   @override
   String toString() {
-    return '$name:\ntypes: $types\nHP: $hp\nATK: $attack\nDEF: $defense';
+    return '''$name ($displayName):
+ - types: $types
+ - HP: $hp
+ - ATK: $attack
+ - DEF: $defense
+ - Image: $imageUrl''';
   }
 }

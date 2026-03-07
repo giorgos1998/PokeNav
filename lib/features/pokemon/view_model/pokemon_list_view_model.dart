@@ -4,7 +4,7 @@ import 'package:pokenav/features/pokemon/data/pokemon_repository.dart';
 import 'package:pokenav/features/pokemon/model/pokemon.dart';
 
 class PokemonListViewModel extends ChangeNotifier {
-  static const _pokemonPerPage = 15;
+  static const _pokemonPerPage = 10;
 
   final List<Pokemon> _visiblePokemons = [];
   final PokemonRepository _repository = PokemonRepository();
@@ -31,7 +31,6 @@ class PokemonListViewModel extends ChangeNotifier {
   }
 
   void applyFilter(PokemonType? type) {
-    print('Applying filter: ${type?.name}');
     activeFilter = type;
     searchEnabled = activeFilter != null ? true : false;
     searchTerm = null;
@@ -44,7 +43,6 @@ class PokemonListViewModel extends ChangeNotifier {
 
   void searchPokemon(String text) {
     searchTerm = text.toLowerCase();
-    print('Searching for: $searchTerm');
 
     noMoreResults = false;
     _visiblePokemons.clear();
@@ -57,7 +55,6 @@ class PokemonListViewModel extends ChangeNotifier {
     isLoadingNames = true;
     notifyListeners();
 
-    print('($activeFilter, $searchEnabled, ${searchTerm?.isEmpty})');
     switch ((activeFilter, searchEnabled, searchTerm?.isEmpty)) {
       case (null, _, _):
         page = await _repository.getPokemonNames(
@@ -74,7 +71,6 @@ class PokemonListViewModel extends ChangeNotifier {
         );
         break;
       case (_, true, false):
-        print('Should be here for searching');
         page = await _repository.getPokemonNamesFromSearch(
           searchTerm: searchTerm!,
           type: activeFilter!,
@@ -90,8 +86,6 @@ class PokemonListViewModel extends ChangeNotifier {
 
     _visiblePokemons.addAll(page);
 
-    print('Finished loading names, count: ${_visiblePokemons.length}');
-
     isLoadingNames = false;
     notifyListeners();
   }
@@ -104,19 +98,10 @@ class PokemonListViewModel extends ChangeNotifier {
       (pokemon) => pokemon.imageUrl == null,
     );
 
-    // print('Pokemon without details: ${emptyDetails.length}');
-
     for (var pokemon in emptyDetails) {
-      try {
-        final index = _visiblePokemons.indexWhere(
-          (p) => p.name == pokemon.name,
-        );
-        _visiblePokemons[index] = (await _repository.getPokemon(pokemon.name));
-      } catch (e) {
-        print('Error when parsing details from: ${pokemon.name}');
-      }
+      final index = _visiblePokemons.indexWhere((p) => p.name == pokemon.name);
+      _visiblePokemons[index] = (await _repository.getPokemon(pokemon.name));
     }
-    // print('Finished loading details, count: ${_visiblePokemons.length}');
 
     isLoadingDetails = false;
     notifyListeners();

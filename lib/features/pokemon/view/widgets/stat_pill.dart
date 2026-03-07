@@ -17,8 +17,8 @@ class StatPill extends StatelessWidget {
         color: Colors.white.withAlpha(150),
       ),
       child: Row(
-        // spacing: 4,
         children: [
+          // Icon
           Padding(
             padding: const EdgeInsets.only(left: 4),
             child: switch (stat) {
@@ -27,6 +27,8 @@ class StatPill extends StatelessWidget {
               StatTypes.defense => Image.asset('icons/shield.png', height: 25),
             },
           ),
+
+          // Value
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(right: 8),

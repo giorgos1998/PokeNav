@@ -1,6 +1,7 @@
 import 'package:pokenav/features/pokemon/data/constants.dart';
 import 'package:pokenav/features/pokemon/data/pokemon_api_service.dart';
 import 'package:pokenav/features/pokemon/model/pokemon.dart';
+import 'package:pokenav/shared/utils/string_utils.dart';
 
 class PokemonRepository {
   final apiService = PokeApiService();
@@ -14,7 +15,10 @@ class PokemonRepository {
     final pokemonJson = await apiService.getPokemonsFromType(type);
     final pokemons = List<Pokemon>.from(
       pokemonJson['pokemon'].map(
-        (entry) => Pokemon(name: entry['pokemon']['name']),
+        (entry) => Pokemon(
+          name: entry['pokemon']['name'],
+          displayName: _getDisplayName(entry['pokemon']['name']),
+        ),
       ),
     );
 
@@ -33,7 +37,10 @@ class PokemonRepository {
     final pokemonJson = await apiService.getPokemonsFromType(type);
     final pokemons = List<Pokemon>.from(
       pokemonJson['pokemon'].map(
-        (entry) => Pokemon(name: entry['pokemon']['name']),
+        (entry) => Pokemon(
+          name: entry['pokemon']['name'],
+          displayName: _getDisplayName(entry['pokemon']['name']),
+        ),
       ),
     );
 
@@ -47,7 +54,12 @@ class PokemonRepository {
     );
 
     return List<Pokemon>.from(
-      pokemonJson['results'].map((result) => Pokemon(name: result['name'])),
+      pokemonJson['results'].map(
+        (result) => Pokemon(
+          name: result['name'],
+          displayName: _getDisplayName(result['name']),
+        ),
+      ),
     );
   }
 
@@ -56,12 +68,17 @@ class PokemonRepository {
 
     return Pokemon(
       name: name,
+      displayName: _getDisplayName(name),
       types: _getTypes(pokemonJson),
       hp: _getStat(stat: 'hp', json: pokemonJson),
       attack: _getStat(stat: 'attack', json: pokemonJson),
       defense: _getStat(stat: 'defense', json: pokemonJson),
       imageUrl: _getImageUrl(pokemonJson),
     );
+  }
+
+  String _getDisplayName(String name) {
+    return name.split('-').map((str) => str.capitalize()).join(' ');
   }
 
   int _getStat({required String stat, required dynamic json}) {

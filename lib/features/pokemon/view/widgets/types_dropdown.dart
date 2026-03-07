@@ -14,7 +14,6 @@ class PokemonTypesDropdown extends StatelessWidget {
       builder: (context, child) {
         return DropdownButton<PokemonType>(
           value: viewModel.activeFilter,
-          hint: Text('Type'),
           items: [
             DropdownMenuItem<PokemonType>(
               value: null,
@@ -31,7 +30,7 @@ class PokemonTypesDropdown extends StatelessWidget {
           ],
           onChanged: (value) => viewModel.applyFilter(value),
           isDense: true,
-          underline: SizedBox(),
+          underline: SizedBox.shrink(),
           iconSize: 0.0,
         );
       },

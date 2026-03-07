@@ -12,13 +12,19 @@ class SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return SizedBox(
       height: 45,
       child: TextField(
         controller: textController,
         textAlignVertical: TextAlignVertical.center,
+        style: textTheme.bodyMedium,
         decoration: InputDecoration(
           hintText: 'Search pokemon...',
+          hintStyle: textTheme.bodyMedium!.copyWith(
+            color: textTheme.bodyMedium!.color!.withAlpha(150),
+          ),
           filled: true,
           fillColor: Colors.grey.withAlpha(60),
           isDense: true,
@@ -32,7 +38,7 @@ class SearchBox extends StatelessWidget {
             onPressed: () => onSearchPressed(textController.text),
           ),
         ),
-        onSubmitted: (value) => onSearchPressed(textController.text),
+        onSubmitted: (_) => onSearchPressed(textController.text),
       ),
     );
   }

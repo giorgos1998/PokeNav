@@ -1,22 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pokenav/features/pokemon/model/pokemon.dart';
 import 'package:pokenav/features/pokemon/view/widgets/pokemon_card.dart';
 import 'package:pokenav/features/pokemon/view/widgets/search_box.dart';
 import 'package:pokenav/features/pokemon/view/widgets/types_dropdown.dart';
 import 'package:pokenav/features/pokemon/view_model/pokemon_list_view_model.dart';
-
-const pokemons = [
-  'bulbasaur',
-  'ivysaur',
-  'venusaur',
-  'charmander',
-  'charmeleon',
-  'charizard',
-  'squirtle',
-  'wartortle',
-  'blastoise',
-  'caterpie',
-];
 
 class PokemonListLayout extends StatefulWidget {
   const PokemonListLayout({super.key});
@@ -41,6 +27,7 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
 
+    // Load next page when the scrolled list is almost at the end.
     if (currentScroll >= maxScroll - 200 &&
         !_viewModel.isLoadingNames &&
         !_viewModel.noMoreResults) {
@@ -61,12 +48,15 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
 
     return Stack(
       children: [
+        // App background.
         Positioned.fill(
           child: Image.asset(
             'backgrounds/pokeball_background.png',
             fit: BoxFit.cover,
           ),
         ),
+
+        // App interface.
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -83,7 +73,6 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
               child: Image.asset('icons/pokeball.png'),
             ),
             actions: [
-              // if (_viewModel.searchEnabled)
               ListenableBuilder(
                 listenable: _viewModel,
                 builder: (context, child) {
@@ -93,7 +82,6 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
                             _isSearchOpen ? Icons.close : Icons.search,
                           ),
                           onPressed: () {
-                            print('Pressed search');
                             setState(() {
                               _isSearchOpen = !_isSearchOpen;
                               _searchController.text =
@@ -116,9 +104,6 @@ class _PokemonListLayoutState extends State<PokemonListLayout> {
                 child: ListenableBuilder(
                   listenable: _viewModel,
                   builder: (context, child) {
-                    // if (_viewModel.isLoadingNames) {
-                    //   return Center(child: CircularProgressIndicator());
-                    // } else {
                     return CustomScrollView(
                       controller: _scrollController,
                       slivers: [
